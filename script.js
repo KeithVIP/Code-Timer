@@ -55,12 +55,8 @@ function questionClick() {
 
     timerEl.textContent = timer;
     returnEl.textContent = "Wrong!";
-    returnEl.style.color = "red";
-    returnEl.style.fontSize = "500%";
   } else {
     returnEl.textContent = "Correct!";
-    returnEl.style.color = "blue";
-    returnEl.style.fontSize = "500%";
   }
 
   returnEl.setAttribute("class", "return");
@@ -124,7 +120,5 @@ function checkForEnter(event) {
 }
 
 submitBtn.onclick = saveHighscore;
-
 startBtn.onclick = startQuiz;
-
 initialsEl.onkeyup = checkForEnter;
