@@ -3,7 +3,7 @@ var timer = questions.length * 15;
 var timerId;
 
 var questionsEl = document.querySelector("#questions");
-var timerEl = document.querySelector("#timer");
+var timerEl = document.querySelector("#time");
 var choicesEl = document.querySelector("#choices");
 var submitBtn = document.querySelector("#submit");
 var startBtn = document.querySelector("#start");
@@ -15,9 +15,17 @@ function startQuiz() {
   startScreenEl.setAttribute("class", "hide");
   questionsEl.removeAttribute("class");
   timerId = setInterval(tick, 1000);
-  timerEl.textContent = timer;
+  timerEl.textContent = time;
 
   getQuestion();
+}
+
+function tick() {
+  time--;
+  timerEl.textContent = time;
+  if (time <= 0) {
+    quizEnd();
+  }
 }
 
 function getQuestion() {
@@ -39,11 +47,11 @@ function getQuestion() {
 
 function questionClick() {
   if (this.value !== questions[currentQuestionIndex].answer) {
-    timer -= 15;
-    if (timer < 0) {
-      timer = 0;
+    time -= 15;
+    if (time < 0) {
+      time = 0;
     }
-    timerEl.textContent = timer;
+    timerEl.textContent = time;
     returnEl.textContent = "Wrong!";
   } else {
     returnEl.textContent = "Correct!";
@@ -67,16 +75,8 @@ function quizEnd() {
   var endScreenEl = document.getElementById("end-screen");
   endScreenEl.removeAttribute("class");
   var finalScoreEl = document.getElementById("final-score");
-  finalScoreEl.textContent = timer;
+  finalScoreEl.textContent = time;
   questionsEl.setAttribute("class", "hide");
-}
-
-function tick() {
-  timer--;
-  timerEl.textContent = timer;
-  if (timer <= 0) {
-    quizEnd();
-  }
 }
 
 function saveHighscore() {
@@ -86,7 +86,7 @@ function saveHighscore() {
       JSON.parse(window.localStorage.getItem("highscores")) || [];
 
     var newScore = {
-      score: timer,
+      score: time,
       initials: initials,
     };
     highscores.push(newScore);
